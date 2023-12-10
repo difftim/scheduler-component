@@ -1,0 +1,16 @@
+@import 'variables';
+@import 'colors';
+@import 'elevation';
+@import 'radius';
+
+body {
+  @include dsw-colors(light);
+  @include dsw-radius();
+  @include dsw-elevations(light);
+
+  &.dark-theme {
+    @include dsw-colors(dark);
+    @include dsw-radius();
+    @include dsw-elevations(dark);
+  }
+}

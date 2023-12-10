@@ -1,6 +1,45 @@
 {
-  "name": "scheduler-component",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+  "name": "demo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "buildComponent": "node ./script/buildComponent.cjs",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "main": "./src/scheduler.js",
+  "files": [
+    "package.json",
+    "src/scheduler.js",
+    "src/overlap.js",
+    "src/no-overlap.js",
+    "src/scss/**/*.scss"
+  ],
+  "dependencies": {
+    "@types/react": "^18.2.42",
+    "@types/react-big-calendar": "^1.8.6",
+    "@types/react-dom": "^18.2.17",
+    "antd": "5.9.2",
+    "classnames": "2.3.2",
+    "dayjs": "1.11.9",
+    "lodash": "4.17.21",
+    "react": "^18.2.0",
+    "react-big-calendar": "^1.8.5",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "4.14.195",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "eslint": "^8.53.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.4",
+    "sass": "^1.69.5",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0"
+  }
 }

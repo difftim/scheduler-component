@@ -1,0 +1,105 @@
+@import 'scss/system/variables';
+
+.module-avatar {
+  -webkit-app-region: no-drag;
+  position: relative;
+  vertical-align: middle;
+  display: inline-block;
+  border-radius: 50%;
+  user-select: none;
+  pointer-events: all;
+
+  img {
+    object-fit: cover;
+    border-radius: 50%;
+  }
+}
+
+.module-avatar__label {
+  width: 100%;
+  text-align: center;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.module-avatar__icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.module-avatar--36 {
+  height: 36px;
+  width: 36px;
+
+  img {
+    height: 36px;
+    width: 36px;
+  }
+}
+
+.module-avatar__label--36 {
+  // margin-top: 1px;
+  width: 36px;
+  font-size: 16px;
+  letter-spacing: 0.19px;
+  line-height: 36px;
+}
+
+.module-avatar__icon--36 {
+  height: 24px;
+  width: 24px;
+}
+
+.module-avatar--no-image {
+  background-color: $dsw-color-primary-light;
+}
+
+.module-avatar--signal-blue {
+  background: linear-gradient(293.26deg, #1773eb 39.79%, #4da0ff 100%);
+}
+.module-avatar--red {
+  background-color: $color-conversation-red;
+}
+.module-avatar--deep_orange {
+  background-color: $color-conversation-deep_orange;
+}
+.module-avatar--brown {
+  background-color: $color-conversation-brown;
+}
+.module-avatar--pink {
+  background-color: $color-conversation-pink;
+}
+.module-avatar--purple {
+  background-color: $color-conversation-purple;
+}
+.module-avatar--indigo {
+  background-color: $color-conversation-indigo;
+}
+.module-avatar--blue {
+  background-color: $color-conversation-blue;
+}
+.module-avatar--teal {
+  background-color: $color-conversation-teal;
+}
+.module-avatar--green {
+  background-color: $color-conversation-green;
+}
+.module-avatar--light_green {
+  background-color: $color-conversation-light_green;
+}
+.module-avatar--blue_grey {
+  background-color: $color-conversation-blue_grey;
+}
+
+.module-avatar--group-white {
+  //background-color: $color-white;
+  //border: 1px solid $color-signal-blue;
+  background: linear-gradient(293.26deg, #1773eb 39.79%, #4da0ff 100%);
+}
+
+.module-avatar--archive-yellow {
+  background-color: #f6a14a;
+}

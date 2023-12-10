@@ -1,0 +1,7 @@
+@mixin dsw-radius {
+  --dsw-radius-large: #{$dsw-radius-large};
+  --dsw-radius-middle: #{$dsw-radius-middle};
+  --dsw-radius-small: #{$dsw-radius-small};
+  --dsw-radius-circle: #{$dsw-radius-circle};
+  --dsw-radius-pill: #{$dsw-radius-pill};
+}

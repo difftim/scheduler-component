@@ -1,0 +1,13 @@
+@mixin dsw-elevations($theme: light) {
+  @if $theme ==light {
+    --dsw-elevation-01: #{$dsw-elevation-01-light};
+    --dsw-elevation-02: #{$dsw-elevation-02-light};
+    --dsw-elevation-03: #{$dsw-elevation-03-light};
+  }
+
+  @if $theme ==dark {
+    --dsw-elevation-01: #{$dsw-elevation-01-dark};
+    --dsw-elevation-02: #{$dsw-elevation-02-dark};
+    --dsw-elevation-03: #{$dsw-elevation-03-dark};
+  }
+}
