@@ -1,9 +1,15 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .rbc-calendar {
   .rbc-timeslot-group {
-    min-height: 80px !important;
+    min-height: 86px !important;
   }
 
   .rbc-time-gutter {
+    background-color: var(--dsw-color-bg-1);
     .rbc-timeslot-group {
       border-bottom: 1px solid rgba(0, 0, 0, 0);
       .rbc-label {
@@ -92,6 +98,7 @@
   .rbc-events-container {
     .rbc-event-label {
       font-size: 10px;
+      color: var(--dsw-color-text-secondary);
     }
     .rbc-event-content {
       font-size: 10px;
@@ -123,6 +130,7 @@
 
   .toolbar-header {
     border-bottom: 1px solid var(--dsw-color-line);
+    background-color: var(--dsw-color-bg-1);
     padding: 16px 24px;
     display: flex;
     justify-content: space-between;

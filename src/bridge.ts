@@ -32,9 +32,7 @@ export class Bridge {
 
   on(eventName: string, callback: (...args: any) => void) {
     if (!this.events[eventName]) {
-      this.events = {
-        [eventName]: [callback],
-      };
+      this.events[eventName] = [callback];
     } else {
       this.events[eventName].push(callback);
     }
@@ -45,5 +43,9 @@ export class Bridge {
     this.events[name].forEach(fn => {
       fn(payload);
     });
+  }
+
+  clear() {
+    this.events = {};
   }
 }
