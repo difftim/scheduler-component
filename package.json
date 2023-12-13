@@ -1,6 +1,6 @@
 {
   "name": "@baye/scheduler-component",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "types": "./index.d.ts",
   "scripts": {
@@ -12,6 +12,7 @@
     "prepublishOnly": "yarn build && yarn buildComponent"
   },
   "main": "./src/Calendar.js",
+  "module": "./src/Calendar.js",
   "files": [
     "package.json",
     "src/Calendar.js",
