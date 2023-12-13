@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { MyCalendar } from './Scheduler.tsx';
+import { MyCalendar } from './Calendar.tsx';
 import { Avatar } from './Avatar';
 import { Bridge } from './bridge';
-import './scss/app.scss';
 import { getColors } from './colors.ts';
+import './scss/app.scss';
 
 const App: React.FC = () => {
   const [isDark, setIsDark] = useState(() => {
@@ -82,35 +82,25 @@ const App: React.FC = () => {
   }
 
   return (
-    <div>
-      {/*
-      <div style={{ display: 'flex' }}>
-        <button onClick={() => bridge.emit('changeDate', '2023-12-11')}>
-          test_______2023-12-11
-        </button>
-        <button onClick={() => bridge.emit('changeView', 'week')}>
-          change_view_to_week
-        </button>
-      </div> */}
-      <MyCalendar
-        ref={calendarRef}
-        events={events}
-        eventBgColors={eventBgColors}
-        members={members}
-        onRenderHeader={onRenderHeader}
-        myInfo={{
-          myID: '3333',
-          name: 'baye',
-          utcOffset: 8,
-        }}
-        onSelectEvent={(e: any) => {
-          bridge.showMeetingDetail(e);
-        }}
-        onSelectSlot={(range: any) => {
-          bridge.createNewMeeting(range);
-        }}
-      />
-    </div>
+    <MyCalendar
+      ref={calendarRef}
+      events={events}
+      eventBgColors={eventBgColors}
+      members={members}
+      onRenderHeader={onRenderHeader}
+      showHeader={false}
+      myInfo={{
+        myID: '3333',
+        name: 'baye',
+        utcOffset: 8,
+      }}
+      onSelectEvent={(e: any) => {
+        bridge.showMeetingDetail(e);
+      }}
+      onSelectSlot={(range: any) => {
+        bridge.createNewMeeting(range);
+      }}
+    />
   );
 };
 

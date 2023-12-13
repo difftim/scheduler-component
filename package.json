@@ -1,7 +1,8 @@
 {
   "name": "@baye/scheduler-component",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
+  "types": "./index.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -10,13 +11,14 @@
     "preview": "vite preview",
     "prepublishOnly": "yarn build && yarn buildComponent"
   },
-  "main": "./src/scheduler.js",
+  "main": "./src/Calendar.js",
   "files": [
     "package.json",
-    "src/scheduler.js",
+    "src/Calendar.js",
     "src/overlap.js",
     "src/no-overlap.js",
-    "src/scss/**/*.scss"
+    "src/scss/**/*.scss",
+    "index.d.ts"
   ],
   "dependencies": {
     "react-big-calendar": "^1.8.5"
