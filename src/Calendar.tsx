@@ -16,7 +16,7 @@ import dayjs from 'dayjs';
 import isToday from 'dayjs/plugin/isToday';
 import isBetween from 'dayjs/plugin/isBetween';
 import utc from 'dayjs/plugin/utc';
-import noOverlap from './no-overlap.ts';
+import noOverlap from './no-overlap';
 
 dayjs.extend(isToday);
 dayjs.extend(isBetween);

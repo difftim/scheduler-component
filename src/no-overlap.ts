@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import overlap from './overlap.ts';
+import overlap from './overlap';
 
 function getMaxIdxDFS(node, maxIdx, visited) {
   for (let i = 0; i < node.friends.length; ++i) {
