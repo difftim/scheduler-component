@@ -161,7 +161,7 @@ export const MyCalendar: CalendarComponent = ({
 
   const _events = useMemo(
     () => events.map(item => ({ ...item, resourceId: item.id })),
-    [view]
+    [view, events]
   );
 
   const resources = useMemo(() => {
