@@ -1,6 +1,6 @@
 {
   "name": "@baye/scheduler-component",
-  "version": "0.0.5",
+  "version": "0.0.5-alpha.2",
   "types": "./index.d.ts",
   "scripts": {
     "dev": "vite",
@@ -10,13 +10,12 @@
     "preview": "vite preview",
     "prepublishOnly": "yarn build && yarn buildComponent"
   },
-  "main": "./src/Calendar.js",
-  "module": "./src/Calendar.js",
+  "main": "./Calendar.js",
   "files": [
     "package.json",
-    "src/Calendar.js",
-    "src/overlap.js",
-    "src/no-overlap.js",
+    "Calendar.js",
+    "overlap.js",
+    "no-overlap.js",
     "src/scss/**/*.scss",
     "index.d.ts"
   ],

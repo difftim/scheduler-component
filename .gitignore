@@ -23,6 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-src/Calendar.js
-src/overlap.js
-src/no-overlap.js
+Calendar.js
+overlap.js
+no-overlap.js

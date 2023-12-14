@@ -17,6 +17,6 @@ entrys.forEach(file => {
   esbuild.build({
     ...options,
     entryPoints: [path.join(__dirname, `../src/${file}`)],
-    outfile: path.join(__dirname, `../src/${file.split('.')[0]}.js`),
+    outfile: path.join(__dirname, `../${file.split('.')[0]}.js`),
   });
 });
