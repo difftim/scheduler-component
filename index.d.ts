@@ -1,11 +1,11 @@
 import React from 'react';
+import { View } from 'react-big-calendar';
 
-type CalendarRef = {
-  setDate: any;
-  setCurrentView: (view: 'day' | 'week') => any;
-};
-
-type CalendarProps = {
+export type CalendarProps = {
+  date: Date;
+  onChange: (date: Date) => void;
+  view: 'day' | 'week';
+  onViewChange: (view: View) => void;
   events: any[];
   members: any[];
   onRenderHeader: (item: any) => JSX.Element;
@@ -20,9 +20,7 @@ type CalendarProps = {
   onSelectSlot?: any;
 };
 
-type CalendarComponent = React.ForwardRefExoticComponent<
-  CalendarProps & React.RefAttributes<CalendarRef>
->;
+export type CalendarComponent = React.FC<CalendarProps>;
 
 declare const MyCalendar: CalendarComponent;
 

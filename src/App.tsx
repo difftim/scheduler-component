@@ -4,6 +4,7 @@ import { Avatar } from './Avatar';
 import { Bridge } from './bridge';
 import { getColors } from './colors.ts';
 import './scss/app.scss';
+import { View } from 'react-big-calendar';
 
 const App: React.FC = () => {
   const [isDark, setIsDark] = useState(() => {
@@ -21,9 +22,7 @@ const App: React.FC = () => {
 
     bridge.on('changeDate', date => {
       const d = new Date(date);
-      if (calendarRef.current) {
-        calendarRef.current.setDate(d);
-      }
+      setDate(d);
     });
 
     bridge.on('changeView', view => {
@@ -35,6 +34,8 @@ const App: React.FC = () => {
     return bridge;
   });
   const calendarRef = useRef<any>(null);
+  const [date, setDate] = useState(new Date());
+  const [view, setView] = useState<any>('day');
 
   const eventBgColors = useMemo(
     () => getColors(isDark ? 'dark' : 'light'),
@@ -83,12 +84,15 @@ const App: React.FC = () => {
 
   return (
     <MyCalendar
-      ref={calendarRef}
+      date={date}
+      view={view}
+      onViewChange={view => setView(view as unknown as View)}
+      onChange={setDate}
       events={events}
       eventBgColors={eventBgColors}
       members={members}
       onRenderHeader={onRenderHeader}
-      showHeader={false}
+      // showHeader={false}
       myInfo={{
         myID: '3333',
         name: 'baye',

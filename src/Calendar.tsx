@@ -1,22 +1,11 @@
-import React, {
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useState,
-} from 'react';
-import {
-  Calendar,
-  Navigate,
-  View,
-  Views,
-  dayjsLocalizer,
-} from 'react-big-calendar';
+import { useCallback, useEffect, useMemo } from 'react';
+import { Calendar, Navigate, Views, dayjsLocalizer } from 'react-big-calendar';
 import dayjs from 'dayjs';
 import isToday from 'dayjs/plugin/isToday';
 import isBetween from 'dayjs/plugin/isBetween';
 import utc from 'dayjs/plugin/utc';
 import noOverlap from './no-overlap';
+import type { CalendarComponent } from '..';
 
 dayjs.extend(isToday);
 dayjs.extend(isBetween);
@@ -36,21 +25,6 @@ function ViewNamesGroup({ views: viewNames, view, messages, onView }: any) {
     </button>
   ));
 }
-
-type CalendarProps = {
-  events: any[];
-  members: any[];
-  onRenderHeader: (item: any) => JSX.Element;
-  showHeader?: boolean;
-  myInfo: {
-    myID: string;
-    name: string;
-    utcOffset: number;
-  };
-  eventBgColors: any[];
-  onSelectEvent?: any;
-  onSelectSlot?: any;
-};
 
 function CustomToolbar({
   date,
@@ -103,7 +77,7 @@ function CustomToolbar({
             >
               <path
                 d="M12.5 5L7.5 10L12.5 15"
-                stroke="#474D57"
+                stroke="currentColor"
                 strokeWidth="1.67016"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -162,145 +136,129 @@ function CustomHeader({ date }: any) {
   );
 }
 
-type CalendarRef = {
-  setDate: any;
-  setCurrentView: (view: 'day' | 'week') => any;
-};
+export const MyCalendar: CalendarComponent = ({
+  events,
+  members,
+  onRenderHeader,
+  myInfo,
+  onSelectEvent,
+  onSelectSlot,
+  eventBgColors,
+  showHeader = true,
+  date,
+  onChange,
+  view,
+  onViewChange,
+}) => {
+  useEffect(() => {
+    const slots = document.querySelectorAll('.rbc-day-slot.rbc-today');
+    if (slots?.length) {
+      const firstElement = slots[0];
+      firstElement.classList.remove('redpoint');
+      firstElement.classList.add('redpoint');
+    }
+  }, [date, view]);
 
-export const MyCalendar = React.forwardRef<CalendarRef, CalendarProps>(
-  (
-    {
-      events,
-      members,
-      onRenderHeader,
-      myInfo,
-      onSelectEvent,
-      onSelectSlot,
-      eventBgColors,
-      showHeader = true,
-    },
-    ref
-  ) => {
-    const [currentView, setCurrentView] = useState<View>(Views.DAY);
-    const [date, setDate] = useState(new Date('2023-12-7'));
+  const _events = useMemo(
+    () => events.map(item => ({ ...item, resourceId: item.id })),
+    [view]
+  );
 
-    useImperativeHandle(ref, () => ({
-      setDate,
-      setCurrentView,
+  const resources = useMemo(() => {
+    if (view == Views.WEEK) {
+      return;
+    }
+
+    return members.map(m => ({
+      ...m,
+      title: onRenderHeader(m),
     }));
+  }, [view, onRenderHeader, members]);
 
-    useEffect(() => {
-      const slots = document.querySelectorAll('.rbc-day-slot.rbc-today');
-      if (slots?.length) {
-        const firstElement = slots[0];
-        firstElement.classList.remove('redpoint');
-        firstElement.classList.add('redpoint');
-      }
-    }, [date, currentView]);
+  const colorMap = useMemo(() => {
+    const _colorMap = members.reduce((sum, item, index) => {
+      sum[item.id] = eventBgColors[index];
 
-    const _events = useMemo(
-      () => events.map(item => ({ ...item, resourceId: item.id })),
-      [currentView]
-    );
+      return sum;
+    }, {});
 
-    const resources = useMemo(() => {
-      if (currentView == Views.WEEK) {
-        return;
-      }
+    return _colorMap;
+  }, [eventBgColors, members]);
 
-      return members.map(m => ({
-        ...m,
-        title: onRenderHeader(m),
-      }));
-    }, [currentView, onRenderHeader, members]);
-
-    const colorMap = useMemo(() => {
-      const _colorMap = members.reduce((sum, item, index) => {
-        sum[item.id] = eventBgColors[index];
-
-        return sum;
-      }, {});
-
-      return _colorMap;
-    }, [eventBgColors, members]);
-
-    const eventPropGetter = useCallback(
-      (event: any) => {
-        return {
-          style: {
-            backgroundColor: colorMap[event.id],
-          },
-        };
-      },
-      [colorMap]
-    );
-
-    const components = useMemo(() => {
-      const toolbar = showHeader ? CustomToolbar : () => null;
+  const eventPropGetter = useCallback(
+    (event: any) => {
       return {
-        toolbar,
-        timeGutterHeader: (props: any) => (
-          <TimeGutter {...props} myInfo={myInfo} />
-        ),
-        header: CustomHeader,
+        style: {
+          backgroundColor: colorMap[event.id],
+        },
       };
-    }, [showHeader, myInfo]);
+    },
+    [colorMap]
+  );
 
-    return (
-      <Calendar<{
-        id: string;
-        eid: string;
-        title: string;
-        start: Date;
-        end: Date;
-        desc: string;
-        isBusy: boolean;
-        utc: Number;
-      }>
-        resources={resources}
-        dayLayoutAlgorithm={noOverlap}
-        eventPropGetter={eventPropGetter}
-        components={components}
-        date={date}
-        onNavigate={date => {
-          setDate(date);
-        }}
-        localizer={localizer}
-        events={_events}
-        startAccessor="start"
-        endAccessor="end"
-        view={currentView}
-        formats={{
-          timeGutterFormat: date => dayjs(date).locale('en').format('h A'),
-        }}
-        style={{ height: '100vh' }}
-        views={{
-          day: true,
-          week: true,
-        }}
-        selectable
-        onView={setCurrentView}
-        onSelectSlot={e => {
-          const start = dayjs(e.start).unix();
-          const end = dayjs(e.end).unix();
+  const components = useMemo(() => {
+    const toolbar = showHeader ? CustomToolbar : () => null;
+    return {
+      toolbar,
+      timeGutterHeader: (props: any) => (
+        <TimeGutter {...props} myInfo={myInfo} />
+      ),
+      header: CustomHeader,
+    };
+  }, [showHeader, myInfo]);
 
-          return onSelectSlot?.({
-            ...e,
-            start,
-            end,
-          });
-        }}
-        onSelectEvent={e => {
-          const start = dayjs(e.start).unix();
-          const end = dayjs(e.end).unix();
+  return (
+    <Calendar<{
+      id: string;
+      eid: string;
+      title: string;
+      start: Date;
+      end: Date;
+      desc: string;
+      isBusy: boolean;
+      utc: Number;
+    }>
+      resources={resources}
+      dayLayoutAlgorithm={noOverlap}
+      eventPropGetter={eventPropGetter}
+      components={components}
+      date={date}
+      onNavigate={onChange}
+      localizer={localizer}
+      events={_events}
+      startAccessor="start"
+      endAccessor="end"
+      view={view}
+      formats={{
+        timeGutterFormat: date => dayjs(date).locale('en').format('h A'),
+      }}
+      style={{ height: '100vh' }}
+      views={{
+        day: true,
+        week: true,
+      }}
+      selectable
+      onView={onViewChange}
+      onSelectSlot={e => {
+        const start = dayjs(e.start).unix();
+        const end = dayjs(e.end).unix();
 
-          return onSelectEvent?.({
-            ...e,
-            start,
-            end,
-          });
-        }}
-      />
-    );
-  }
-);
+        return onSelectSlot?.({
+          ...e,
+          start,
+          end,
+        });
+      }}
+      onSelectEvent={e => {
+        const start = dayjs(e.start).unix();
+        const end = dayjs(e.end).unix();
+
+        return onSelectEvent?.({
+          ...e,
+          start,
+          end,
+        });
+      }}
+    />
+  );
+};
