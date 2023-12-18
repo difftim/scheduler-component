@@ -36,15 +36,15 @@ function CustomToolbar({
   views,
 }: any) {
   const dateStr = useMemo(() => {
-    const d = dayjs(date).locale('en');
+    const d = dayjs(date);
     if (view === Views.DAY) {
-      return d.format('ddd, MMM D');
+      return d.locale('en').format('ddd, MMM D');
     }
 
     const a = d.startOf('week');
     const b = d.endOf('week');
 
-    return [a, b].map(o => o.format('ddd, MMM D')).join(' - ');
+    return [a, b].map(o => o.locale('en').format('ddd, MMM D')).join(' - ');
   }, [view, date]);
 
   const isDisabled = (date: any) => dayjs(date) <= dayjs();
