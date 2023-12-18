@@ -47,6 +47,8 @@ function CustomToolbar({
     return [a, b].map(o => o.format('ddd, MMM D')).join(' - ');
   }, [view, date]);
 
+  const isDisabled = (date: any) => dayjs(date) <= dayjs();
+
   return (
     <div className="rbc-toolbar toolbar-header">
       <div>
@@ -65,8 +67,14 @@ function CustomToolbar({
 
         <div className="pre-next-btn-wrapper">
           <span
-            onClick={() => onNavigate(Navigate.PREVIOUS)}
+            onClick={() => {
+              if (isDisabled(date)) {
+                return;
+              }
+              onNavigate(Navigate.PREVIOUS);
+            }}
             aria-label={messages.previous}
+            className={isDisabled(date) ? 'disabled' : ''}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

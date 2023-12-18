@@ -175,6 +175,9 @@ body {
         height: 20px;
         cursor: pointer;
         color: var(--dsw-color-text-primary);
+        &.disabled {
+          color: var(--dsw-color-text-disabled);
+        }
       }
     }
   }
