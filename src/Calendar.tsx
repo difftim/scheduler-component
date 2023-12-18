@@ -218,6 +218,7 @@ export const MyCalendar: CalendarComponent = ({
       isBusy: boolean;
       utc: Number;
     }>
+      culture="en"
       resources={resources}
       dayLayoutAlgorithm={noOverlap}
       eventPropGetter={eventPropGetter}
