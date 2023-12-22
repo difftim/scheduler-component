@@ -34,6 +34,7 @@ function CustomToolbar({
   onView,
   view,
   views,
+  onExtraHeaderRender,
 }: any) {
   const dateStr = useMemo(() => {
     const d = dayjs(date);
@@ -48,6 +49,7 @@ function CustomToolbar({
   }, [view, date]);
 
   const isDisabled = (date: any) => dayjs(date) <= dayjs();
+  const extraElement = onExtraHeaderRender?.() || null;
 
   return (
     <div className="rbc-toolbar toolbar-header">
@@ -114,8 +116,7 @@ function CustomToolbar({
           </span>
         </div>
       </div>
-
-      <span className="rbc-btn-group">
+      <span className="rbc-btn-group rbc-btn-group-override">
         <ViewNamesGroup
           view={view}
           views={views}
@@ -123,6 +124,7 @@ function CustomToolbar({
           onView={onView}
         />
       </span>
+      {extraElement}
     </div>
   );
 }
@@ -157,6 +159,7 @@ export const MyCalendar: CalendarComponent = ({
   onChange,
   view,
   onViewChange,
+  onExtraHeaderRender = () => null,
 }) => {
   useEffect(() => {
     const slots = document.querySelectorAll('.rbc-day-slot.rbc-today');
@@ -205,7 +208,11 @@ export const MyCalendar: CalendarComponent = ({
   );
 
   const components = useMemo(() => {
-    const toolbar = showHeader ? CustomToolbar : () => null;
+    const toolbar = (props: any) =>
+      showHeader ? (
+        <CustomToolbar onExtraHeaderRender={onExtraHeaderRender} {...props} />
+      ) : null;
+
     return {
       toolbar,
       timeGutterHeader: (props: any) => (

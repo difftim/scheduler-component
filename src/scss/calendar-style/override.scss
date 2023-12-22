@@ -135,7 +135,7 @@ body {
     background-color: var(--dsw-color-bg-1);
     padding: 12px 24px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-bottom: 0px;
 
     > div {
@@ -180,6 +180,10 @@ body {
         }
       }
     }
+  }
+
+  .rbc-btn-group-override {
+    margin-left: auto;
   }
 
   .avtar-header {

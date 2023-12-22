@@ -18,6 +18,7 @@ export type CalendarProps = {
   eventBgColors: any[];
   onSelectEvent?: any;
   onSelectSlot?: any;
+  onExtraHeaderRender?: (...args: any[]) => JSX.Element;
 };
 
 export type CalendarComponent = React.FC<CalendarProps>;
