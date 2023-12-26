@@ -18,10 +18,6 @@
     pointer-events: none;
   }
 
-  &.rbc-selected {
-    background-color: darken($event-bg, 10%);
-  }
-
   &:focus {
     outline: 5px auto $event-outline;
   }
@@ -33,7 +29,7 @@
 }
 
 .rbc-event-overlaps {
-  box-shadow: -1px 1px 5px 0px rgba(51,51,51,.5);
+  box-shadow: -1px 1px 5px 0px rgba(51, 51, 51, 0.5);
 }
 
 .rbc-event-continues-prior {
@@ -44,7 +40,6 @@
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-
 
 .rbc-event-continues-earlier {
   border-top-left-radius: 0;

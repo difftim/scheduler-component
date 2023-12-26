@@ -97,7 +97,8 @@ body {
     margin-right: 0 !important;
   }
 
-  .rbc-events-container {
+  .rbc-events-container,
+  .rbc-row-segment {
     .rbc-event-label {
       font-size: 10px;
       color: var(--dsw-color-text-secondary);
@@ -242,5 +243,10 @@ body {
       font-weight: 400;
       line-height: 16px;
     }
+  }
+
+  .rbc-event:focus,
+  .rbc-day-slot .rbc-background-event:focus {
+    outline: none;
   }
 }

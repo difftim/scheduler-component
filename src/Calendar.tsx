@@ -252,6 +252,7 @@ export const MyCalendar: CalendarComponent = ({
         week: true,
       }}
       selectable
+      showAllEvents
       onView={onViewChange}
       onSelectSlot={e => {
         const start = dayjs(e.start).unix();
