@@ -10,11 +10,7 @@ export type CalendarProps = {
   members: any[];
   onRenderHeader: (item: any) => JSX.Element;
   showHeader?: boolean;
-  myInfo: {
-    myID: string;
-    name: string;
-    utcOffset: number;
-  };
+  myUtc?: string | number;
   eventBgColors: any[];
   onSelectEvent?: any;
   onSelectSlot?: any;

@@ -9,8 +9,8 @@ const myEvents = [
   {
     id: '+6666',
     title: 'Meeting',
-    start: new Date(2023, 11, 7, 10, 30, 0, 0),
-    end: new Date(2023, 11, 7, 12, 30, 0, 0),
+    start: new Date(2023, 11, 26, 11, 30, 0, 0),
+    end: new Date(2023, 11, 26, 11, 35, 0, 0),
     desc: 'Pre-meeting meeting, to prepare for the meeting',
   },
   {
@@ -87,12 +87,12 @@ const myEvents = [
   //   start: new Date(new Date().setHours(new Date().getHours() - 3)),
   //   end: new Date(new Date().setHours(new Date().getHours() + 3)),
   // },
-  {
-    id: '+6666',
-    title: 'Point in Time Event',
-    start: new Date(),
-    end: new Date(),
-  },
+  // {
+  //   id: '+6666',
+  //   title: 'Point in Time Event',
+  //   start: new Date(),
+  //   end: new Date(2023, 11, 27, 0, 0, 0),
+  // },
   {
     id: '+9999',
     title: 'Video Record',

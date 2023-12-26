@@ -48,7 +48,7 @@ function CustomToolbar({
     return [a, b].map(o => o.locale('en').format('ddd, MMM D')).join(' - ');
   }, [view, date]);
 
-  const isDisabled = (date: any) => dayjs(date) <= dayjs();
+  const isDisabled = (date: any) => dayjs(date) < dayjs().startOf('week');
   const extraElement = onExtraHeaderRender?.() || null;
 
   return (
@@ -129,8 +129,8 @@ function CustomToolbar({
   );
 }
 
-function TimeGutter({ myInfo }: any) {
-  return <div className="time-gutter">UTC+{myInfo.utcOffset}</div>;
+function TimeGutter({ myUtc }: any) {
+  return <div className="time-gutter">UTC+{myUtc}</div>;
 }
 
 function CustomHeader({ date }: any) {
@@ -150,7 +150,7 @@ export const MyCalendar: CalendarComponent = ({
   events,
   members,
   onRenderHeader,
-  myInfo,
+  myUtc,
   onSelectEvent,
   onSelectSlot,
   eventBgColors,
@@ -215,12 +215,10 @@ export const MyCalendar: CalendarComponent = ({
 
     return {
       toolbar,
-      timeGutterHeader: (props: any) => (
-        <TimeGutter {...props} myInfo={myInfo} />
-      ),
+      timeGutterHeader: (props: any) => <TimeGutter {...props} myUtc={myUtc} />,
       header: CustomHeader,
     };
-  }, [showHeader, myInfo]);
+  }, [showHeader, myUtc]);
 
   return (
     <Calendar<{

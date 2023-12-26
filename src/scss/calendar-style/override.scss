@@ -27,7 +27,9 @@ body {
   }
 
   .rbc-allday-cell {
-    display: none;
+    .rbc-day-bg.rbc-today {
+      background-color: inherit;
+    }
   }
   .rbc-time-header {
     background-color: var(--dsw-color-bg-1);

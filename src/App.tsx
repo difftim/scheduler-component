@@ -69,12 +69,12 @@ const App: React.FC = () => {
       <Avatar
         conversationType="direct"
         size={36}
-        name={item.name}
+        name={item.cname || item.name}
         id={item.id}
         onClickAvatar={() => bridge.showAvatar(item.id)}
       />
       <div className="name">{item.name || item.id}</div>
-      <div className="utc">{`UTC+${item.utc}`}</div>
+      <div className="utc">{`UTC+${Number.parseInt(item.utc)}`}</div>
     </div>
   );
 
@@ -125,11 +125,7 @@ const App: React.FC = () => {
           </svg>
         );
       }}
-      myInfo={{
-        myID: '3333',
-        name: 'baye',
-        utcOffset: 8,
-      }}
+      myUtc={8}
       onSelectEvent={(e: any) => {
         bridge.showMeetingDetail(e);
       }}
