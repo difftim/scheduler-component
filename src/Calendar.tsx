@@ -48,7 +48,13 @@ function CustomToolbar({
     return [a, b].map(o => o.locale('en').format('ddd, MMM D')).join(' - ');
   }, [view, date]);
 
-  const isDisabled = (date: any) => dayjs(date) < dayjs().startOf('week');
+  const isDisabled = (date: any, view: 'day' | 'week') => {
+    if (view === Views.DAY) {
+      return dayjs(date) <= dayjs().startOf('week');
+    }
+
+    return dayjs(date).startOf('weeks') <= dayjs().startOf('week');
+  };
   const extraElement = onExtraHeaderRender?.() || null;
 
   return (
@@ -70,13 +76,13 @@ function CustomToolbar({
         <div className="pre-next-btn-wrapper">
           <span
             onClick={() => {
-              if (isDisabled(date)) {
+              if (isDisabled(date, view)) {
                 return;
               }
               onNavigate(Navigate.PREVIOUS);
             }}
             aria-label={messages.previous}
-            className={isDisabled(date) ? 'disabled' : ''}
+            className={isDisabled(date, view) ? 'disabled' : ''}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
