@@ -1,6 +1,6 @@
 {
   "name": "@baye/scheduler-component",
-  "version": "0.0.5-alpha.10",
+  "version": "0.0.5-alpha.11",
   "types": "./index.d.ts",
   "scripts": {
     "dev": "vite",

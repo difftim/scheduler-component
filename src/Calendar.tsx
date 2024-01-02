@@ -45,7 +45,11 @@ function CustomToolbar({
     const a = d.startOf('week');
     const b = d.endOf('week');
 
-    return [a, b].map(o => o.locale('en').format('ddd, MMM D')).join(' - ');
+    // if (a.startOf('month') < b.startOf('month')) {
+    return [a, b].map(o => o.locale('en').format('MMM D')).join(' - ');
+    // }
+
+    // return `${a.locale('en').format('MMM D')} - ${b.locale('en').format('D')}`;
   }, [view, date]);
 
   const isDisabled = (date: any, view: 'day' | 'week') => {
@@ -71,7 +75,12 @@ function CustomToolbar({
           Today
         </div>
 
-        <div className="date-str">{dateStr}</div>
+        <div
+          className="date-str"
+          style={view === Views.DAY ? { width: '125px' } : {}}
+        >
+          {dateStr}
+        </div>
 
         <div className="pre-next-btn-wrapper">
           <span
@@ -141,13 +150,14 @@ function TimeGutter({ myUtc }: any) {
 
 function CustomHeader({ date }: any) {
   const isToday = dayjs(date).isToday();
+  const d = dayjs(date).locale('en');
 
   return (
     <div
       className={isToday ? 'custom-header-date today' : 'custom-header-date'}
     >
-      <div className="date">{dayjs(date).format('DD')}</div>
-      <div className="week">{dayjs(date).format('ddd')}</div>
+      <div className="date">{d.format('DD')}</div>
+      <div className="week">{d.format('ddd')}</div>
     </div>
   );
 }
