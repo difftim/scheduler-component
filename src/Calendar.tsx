@@ -192,7 +192,7 @@ export const MyCalendar: CalendarComponent = ({
   );
 
   const resources = useMemo(() => {
-    if (view == Views.WEEK) {
+    if (view == Views.WEEK || !members.length) {
       return;
     }
 
