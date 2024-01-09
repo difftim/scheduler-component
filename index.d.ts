@@ -16,6 +16,7 @@ export type CalendarProps = {
   onSelectSlot?: any;
   onExtraHeaderRender?: (...args: any[]) => JSX.Element;
   scrollToTime?: Date;
+  style?: React.CSSProperties;
 };
 
 export type CalendarComponent = React.FC<CalendarProps>;

@@ -177,6 +177,7 @@ export const MyCalendar: CalendarComponent = ({
   onViewChange,
   onExtraHeaderRender = () => null,
   scrollToTime = new Date(),
+  style = {},
 }) => {
   useEffect(() => {
     const slots = document.querySelectorAll('.rbc-day-slot.rbc-today');
@@ -260,11 +261,12 @@ export const MyCalendar: CalendarComponent = ({
       startAccessor="start"
       scrollToTime={scrollToTime}
       endAccessor="end"
+      tooltipAccessor={null}
       view={view}
       formats={{
         timeGutterFormat: date => dayjs(date).locale('en').format('h A'),
       }}
-      style={{ height: '100vh' }}
+      style={{ height: '100vh', ...style }}
       views={{
         day: true,
         week: true,
