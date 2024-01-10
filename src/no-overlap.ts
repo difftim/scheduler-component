@@ -88,6 +88,8 @@ export default function ({
     for (let j = 0; j < allFriends.length; ++j) allFriends[j].size = size;
   }
 
+  console.log('ddd', styledEvents);
+
   for (let i = 0; i < styledEvents.length; ++i) {
     const e = styledEvents[i];
     e.style.left = e.idx * e.size;
@@ -103,11 +105,10 @@ export default function ({
     // padding between events
     // for this feature, `width` is not percentage based unit anymore
     // it will be used with calc()
-    // const padding = e.idx === 0 ? 0 : 3;
-    const padding = 0;
-    e.style.width = `${e.size}%`;
-    e.style.height = `${e.style.height}%`;
-    e.style.xOffset = `${e.style.left}%`;
+    const padding = e.idx === 0 ? 0 : 1;
+    e.style.width = `calc(${e.size}% - ${padding}px)`;
+    e.style.height = `calc(${e.style.height}% - 1px)`;
+    e.style.xOffset = `calc(${e.style.left}% + ${padding}px)`;
   }
 
   return styledEvents;
