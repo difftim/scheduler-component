@@ -235,6 +235,24 @@ export const MyCalendar: CalendarComponent = ({
       toolbar,
       timeGutterHeader: (props: any) => <TimeGutter {...props} myUtc={myUtc} />,
       header: CustomHeader,
+      timeSlotWrapper: ({ value, children }: any) => {
+        if (!children?.props?.children) {
+          return null;
+        }
+
+        const str = dayjs(value).format('LT');
+        const isMidNight = str === '12:00 AM';
+        const isNoon = str === '12:00 PM';
+
+        return (
+          <div className="rbc-time-slot">
+            <span className="rbc-label">{str}</span>
+            <div className="rbc-label">
+              {isMidNight ? 'MidNight' : isNoon ? 'Noon' : ''}
+            </div>
+          </div>
+        );
+      },
     };
   }, [showHeader, myUtc]);
 

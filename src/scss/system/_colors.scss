@@ -81,6 +81,8 @@
     --dsw-color-bg-space: #{$dsw-color-background-space-light};
     --dsw-color-bg-meeting-busy: #{$dsw-color-background-meeting-busy-light};
     --dsw-color-bg-meeting-border: #{$dsw-color-line-light};
+    --dsw-color-view-btn-active: #{$dsw-color-background-sky-light};
+    --dsw-color-text-view-btn-active: #{$dsw-color-primary-light};
     @include unruled(light);
   }
 
@@ -118,6 +120,7 @@
     --dsw-color-bg-space: #{$dsw-color-background-space-dark};
     --dsw-color-bg-meeting-busy: #{$dsw-color-background-meeting-busy-dark};
     --dsw-color-bg-meeting-border: #{$dsw-color-background-3-dark};
+    --dsw-color-text-view-btn-active: #fff;
     @include unruled(dark);
   }
 }
