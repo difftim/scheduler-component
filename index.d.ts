@@ -17,6 +17,7 @@ export type CalendarProps = {
   onExtraHeaderRender?: (...args: any[]) => JSX.Element;
   scrollToTime?: Date;
   style?: React.CSSProperties;
+  className?: string;
 };
 
 export type CalendarComponent = React.FC<CalendarProps>;
