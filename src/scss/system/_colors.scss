@@ -82,7 +82,7 @@
     --dsw-color-bg-meeting-busy: #{$dsw-color-background-meeting-busy-light};
     --dsw-color-bg-meeting-border: #{$dsw-color-line-light};
     --dsw-color-view-btn-active: #{$dsw-color-background-sky-light};
-    --dsw-color-text-view-btn-active: #{$dsw-color-primary-light};
+    --dsw-color-text-view-btn-active: #{$dsw-color-text-info-light};
     @include unruled(light);
   }
 
