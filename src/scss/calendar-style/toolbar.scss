@@ -35,7 +35,7 @@ $active-border: darken($btn-border, 12%);
     &:active,
     &.rbc-active {
       background-image: none;
-      color: var(--dsw-color-text-view-btn-active);
+      color: var(--dsw-color-text-calendar-date);
       // box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
       background-color: var(--dsw-color-bg-sky);
       // border-color: $active-border;

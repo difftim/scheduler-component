@@ -179,6 +179,7 @@ export const MyCalendar: CalendarComponent = ({
   scrollToTime = new Date(),
   style = {},
   className = '',
+  ...rest
 }) => {
   useEffect(() => {
     const slots = document.querySelectorAll('.rbc-day-slot.rbc-today');
@@ -314,6 +315,7 @@ export const MyCalendar: CalendarComponent = ({
           end,
         });
       }}
+      {...rest}
     />
   );
 };
