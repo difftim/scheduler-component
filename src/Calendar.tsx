@@ -251,8 +251,8 @@ export const MyCalendar: CalendarComponent = ({
         }
 
         const str = dayjs(value).locale('en').format('h A');
-        const isMidNight = str === '12:00 AM';
-        const isNoon = str === '12:00 PM';
+        const isMidNight = str === '12 AM';
+        const isNoon = str === '12 PM';
 
         return (
           <div className="rbc-time-slot">
