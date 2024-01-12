@@ -250,7 +250,7 @@ export const MyCalendar: CalendarComponent = ({
           return null;
         }
 
-        const str = dayjs(value).locale('en').format('LT');
+        const str = dayjs(value).locale('en').format('h A');
         const isMidNight = str === '12:00 AM';
         const isNoon = str === '12:00 PM';
 
