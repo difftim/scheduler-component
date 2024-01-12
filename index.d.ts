@@ -11,7 +11,7 @@ export type CalendarProps = {
   onRenderHeader: (item: any) => JSX.Element;
   showHeader?: boolean;
   myUtc?: string | number;
-  eventBgColors: any[];
+  eventBgColors?: Record<string, string>;
   onSelectEvent?: any;
   onSelectSlot?: any;
   onExtraHeaderRender?: (...args: any[]) => JSX.Element;

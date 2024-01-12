@@ -207,8 +207,12 @@ export const MyCalendar: CalendarComponent = ({
   }, [view, onRenderHeader, members]);
 
   const colorMap = useMemo(() => {
-    const _colorMap = members.reduce((sum, item, index) => {
-      sum[item.id] = eventBgColors[index];
+    if (!eventBgColors || members.length === 0) {
+      return {};
+    }
+
+    const _colorMap = members.reduce((sum, item) => {
+      sum[item.id] = eventBgColors[item.id];
 
       return sum;
     }, {});
@@ -218,6 +222,10 @@ export const MyCalendar: CalendarComponent = ({
 
   const eventPropGetter = useCallback(
     (event: any) => {
+      if (!colorMap[event.id]) {
+        return {};
+      }
+
       return {
         style: {
           backgroundColor: colorMap[event.id],
