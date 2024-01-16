@@ -88,8 +88,6 @@ export default function ({
     for (let j = 0; j < allFriends.length; ++j) allFriends[j].size = size;
   }
 
-  console.log('ddd', styledEvents);
-
   for (let i = 0; i < styledEvents.length; ++i) {
     const e = styledEvents[i];
     e.style.left = e.idx * e.size;
