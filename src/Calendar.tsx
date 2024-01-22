@@ -169,7 +169,7 @@ export const MyCalendar: CalendarComponent = ({
   myUtc,
   onSelectEvent,
   onSelectSlot,
-  eventBgColors,
+  eventColors,
   showHeader = true,
   date,
   onChange,
@@ -207,18 +207,18 @@ export const MyCalendar: CalendarComponent = ({
   }, [view, onRenderHeader, members]);
 
   const colorMap = useMemo(() => {
-    if (!eventBgColors || members.length === 0) {
+    if (!eventColors || members.length === 0) {
       return {};
     }
 
     const _colorMap = members.reduce((sum, item) => {
-      sum[item.id] = eventBgColors[item.id];
+      sum[item.id] = eventColors[item.id];
 
       return sum;
     }, {});
 
     return _colorMap;
-  }, [eventBgColors, members]);
+  }, [eventColors, members]);
 
   const eventPropGetter = useCallback(
     (event: any) => {
@@ -226,9 +226,12 @@ export const MyCalendar: CalendarComponent = ({
         return {};
       }
 
+      const item = colorMap[event.id];
+
       return {
         style: {
-          backgroundColor: colorMap[event.id],
+          backgroundColor: item.bgColor,
+          color: item.color,
         },
       };
     },

@@ -89,7 +89,7 @@ const App: React.FC = () => {
       onViewChange={view => setView(view as unknown as View)}
       onChange={setDate}
       events={events}
-      eventBgColors={eventBgColors}
+      eventColors={eventBgColors}
       members={members}
       onRenderHeader={onRenderHeader}
       // showHeader={false}
