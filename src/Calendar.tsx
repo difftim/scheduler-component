@@ -35,6 +35,7 @@ function CustomToolbar({
   view,
   views,
   onExtraHeaderRender,
+  renderCustomViewGroup = null,
 }: any) {
   const dateStr = useMemo(() => {
     const d = dayjs(date);
@@ -132,12 +133,16 @@ function CustomToolbar({
         </div>
       </div>
       <span className="rbc-btn-group rbc-btn-group-override">
-        <ViewNamesGroup
-          view={view}
-          views={views}
-          messages={messages}
-          onView={onView}
-        />
+        {renderCustomViewGroup ? (
+          renderCustomViewGroup({ view, views, messages, onView })
+        ) : (
+          <ViewNamesGroup
+            view={view}
+            views={views}
+            messages={messages}
+            onView={onView}
+          />
+        )}
       </span>
       {extraElement}
     </div>
@@ -176,6 +181,7 @@ export const MyCalendar: CalendarComponent = ({
   view,
   onViewChange,
   onExtraHeaderRender = () => null,
+  renderCustomViewGroup = null,
   scrollToTime = new Date(),
   style = {},
   className = '',
@@ -241,7 +247,11 @@ export const MyCalendar: CalendarComponent = ({
   const components = useMemo(() => {
     const toolbar = (props: any) =>
       showHeader ? (
-        <CustomToolbar onExtraHeaderRender={onExtraHeaderRender} {...props} />
+        <CustomToolbar
+          onExtraHeaderRender={onExtraHeaderRender}
+          renderCustomViewGroup={renderCustomViewGroup}
+          {...props}
+        />
       ) : null;
 
     return {

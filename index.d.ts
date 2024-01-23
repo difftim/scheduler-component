@@ -1,6 +1,13 @@
 import React from 'react';
 import { View } from 'react-big-calendar';
 
+type ViewGroupProps = {
+  views: any[];
+  view: any;
+  messages: string[];
+  onView: any;
+};
+
 export type CalendarProps = {
   date: Date;
   onChange: (date: Date) => void;
@@ -24,6 +31,7 @@ export type CalendarProps = {
   scrollToTime?: Date;
   style?: React.CSSProperties;
   className?: string;
+  renderCustomViewGroup?: (viewGroupProps: ViewGroupProps) => JSX.Element;
 };
 
 export type CalendarComponent = React.FC<CalendarProps>;
