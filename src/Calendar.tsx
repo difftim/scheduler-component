@@ -14,6 +14,7 @@ dayjs.extend(utc);
 const localizer = dayjsLocalizer(dayjs);
 
 function ViewNamesGroup({ views: viewNames, view, messages, onView }: any) {
+  console.log(viewNames, messages, view);
   return viewNames.map((name: any) => (
     <button
       type="button"
@@ -271,7 +272,7 @@ export const MyCalendar: CalendarComponent = ({
           <div className="rbc-time-slot">
             <span className="rbc-label">{str}</span>
             <div className="rbc-label">
-              {isMidNight ? 'MidNight' : isNoon ? 'Noon' : ''}
+              {isMidNight ? 'Night' : isNoon ? 'Noon' : ''}
             </div>
           </div>
         );
