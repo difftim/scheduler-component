@@ -106,7 +106,7 @@ body {
       min-height: 20px;
       color: var(--dsw-color-text-secondary);
       border-radius: 0;
-      border: 1px solid var(--dsw-color-line);
+      border: 1px solid var(--dsw-color-line-1);
       padding: 0;
       display: flex;
       justify-content: flex-end;
@@ -120,7 +120,7 @@ body {
   }
 
   .toolbar-header {
-    border-bottom: 1px solid var(--dsw-color-line);
+    border-bottom: 1px solid var(--dsw-color-line-1);
     background-color: var(--dsw-color-bg-1);
     padding: 12px 24px;
     display: flex;
@@ -138,7 +138,7 @@ body {
       cursor: pointer;
       padding: 6px 12px;
       border-radius: 8px;
-      border: 1px solid var(--dsw-color-line);
+      border: 1px solid var(--dsw-color-line-1);
       background-color: var(--dsw-color-bg-1);
       color: var(--dsw-color-text-primary);
       margin-right: 8px;

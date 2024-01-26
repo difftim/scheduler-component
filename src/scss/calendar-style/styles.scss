@@ -54,15 +54,15 @@
   font-weight: bold;
   font-size: 90%;
   min-height: 0;
-  border-bottom: 1px solid var(--dsw-color-line);
+  border-bottom: 1px solid var(--dsw-color-line-1);
 
   & + & {
-    border-left: 1px solid var(--dsw-color-line);
+    border-left: 1px solid var(--dsw-color-line-1);
   }
 
   .rbc-rtl & + & {
     border-left-width: 0;
-    border-right: 1px solid var(--dsw-color-line);
+    border-right: 1px solid var(--dsw-color-line-1);
   }
 
   & > a {
