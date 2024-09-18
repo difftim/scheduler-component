@@ -32,6 +32,7 @@ export type CalendarProps = {
   style?: React.CSSProperties;
   className?: string;
   renderCustomViewGroup?: (viewGroupProps: ViewGroupProps) => JSX.Element;
+  isDisabled?: (date: any, view: 'day' | 'week') => boolean;
 };
 
 export type CalendarComponent = React.FC<CalendarProps>;

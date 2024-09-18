@@ -36,8 +36,19 @@ function CustomToolbar({
   view,
   views,
   onExtraHeaderRender,
+  isDisabled,
   renderCustomViewGroup = null,
 }: any) {
+  if (!isDisabled) {
+    isDisabled = (date: any, view: 'day' | 'week') => {
+      if (view === Views.DAY) {
+        return dayjs(date) <= dayjs().startOf('week');
+      }
+
+      return dayjs(date).startOf('weeks') <= dayjs().startOf('week');
+    };
+  }
+
   const dateStr = useMemo(() => {
     const d = dayjs(date);
     if (view === Views.DAY) {
@@ -54,13 +65,6 @@ function CustomToolbar({
     // return `${a.locale('en').format('MMM D')} - ${b.locale('en').format('D')}`;
   }, [view, date]);
 
-  const isDisabled = (date: any, view: 'day' | 'week') => {
-    if (view === Views.DAY) {
-      return dayjs(date) <= dayjs().startOf('week');
-    }
-
-    return dayjs(date).startOf('weeks') <= dayjs().startOf('week');
-  };
   const extraElement = onExtraHeaderRender?.() || null;
 
   return (
@@ -186,6 +190,7 @@ export const MyCalendar: CalendarComponent = ({
   scrollToTime = new Date(),
   style = {},
   className = '',
+  isDisabled,
   ...rest
 }) => {
   useEffect(() => {
@@ -251,6 +256,7 @@ export const MyCalendar: CalendarComponent = ({
         <CustomToolbar
           onExtraHeaderRender={onExtraHeaderRender}
           renderCustomViewGroup={renderCustomViewGroup}
+          isDisabled={isDisabled}
           {...props}
         />
       ) : null;
