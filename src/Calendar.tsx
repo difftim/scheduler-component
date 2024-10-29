@@ -274,9 +274,11 @@ export const MyCalendar: CalendarComponent = ({
           return null;
         }
 
-        const str = dayjs(value).tz(timeZone).locale('en').format('h A');
-        const isMidNight = str === '12 AM';
-        const isNoon = str === '12 PM';
+        const date = dayjs(value).tz(timeZone).locale('en');
+        const isOddTimeZone = date.get('minute') === 30;
+        const str = isOddTimeZone ? date.format('h:mm A') : date.format('h A');
+        const isMidNight = str.startsWith('12') && str.endsWith('AM');
+        const isNoon = str.startsWith('12') && str.endsWith('PM');
 
         return (
           <div className="rbc-time-slot">
