@@ -4,12 +4,14 @@ import dayjs from 'dayjs';
 import isToday from 'dayjs/plugin/isToday';
 import isBetween from 'dayjs/plugin/isBetween';
 import utc from 'dayjs/plugin/utc';
+import timeZone from 'dayjs/plugin/timezone';
 import noOverlap from './no-overlap';
 import type { CalendarComponent } from '..';
 
 dayjs.extend(isToday);
 dayjs.extend(isBetween);
 dayjs.extend(utc);
+dayjs.extend(timeZone);
 
 const localizer = dayjsLocalizer(dayjs);
 
@@ -176,7 +178,6 @@ export const MyCalendar: CalendarComponent = ({
   events,
   members,
   onRenderHeader,
-  myUtc,
   onSelectEvent,
   onSelectSlot,
   eventColors,
@@ -191,6 +192,7 @@ export const MyCalendar: CalendarComponent = ({
   style = {},
   className = '',
   isDisabled,
+  timeZone,
   ...rest
 }) => {
   useEffect(() => {
@@ -261,6 +263,8 @@ export const MyCalendar: CalendarComponent = ({
         />
       ) : null;
 
+    const myUtc = dayjs().tz(timeZone).utcOffset() / 60;
+
     return {
       toolbar,
       timeGutterHeader: (props: any) => <TimeGutter {...props} myUtc={myUtc} />,
@@ -270,7 +274,7 @@ export const MyCalendar: CalendarComponent = ({
           return null;
         }
 
-        const str = dayjs(value).locale('en').format('h A');
+        const str = dayjs(value).tz(timeZone).locale('en').format('h A');
         const isMidNight = str === '12 AM';
         const isNoon = str === '12 PM';
 
@@ -284,7 +288,7 @@ export const MyCalendar: CalendarComponent = ({
         );
       },
     };
-  }, [showHeader, myUtc]);
+  }, [showHeader, timeZone]);
 
   return (
     <Calendar<{

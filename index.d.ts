@@ -17,7 +17,7 @@ export type CalendarProps = {
   members: any[];
   onRenderHeader: (item: any) => JSX.Element;
   showHeader?: boolean;
-  myUtc?: string | number;
+  timeZone?: string;
   eventColors?: Record<
     string,
     {
