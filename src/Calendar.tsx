@@ -157,7 +157,10 @@ function CustomToolbar({
 }
 
 function TimeGutter({ myUtc }: any) {
-  return <div className="time-gutter">UTC+{myUtc}</div>;
+  const utcStr =
+    Number(myUtc) >= 0 ? `UTC+${myUtc}` : `UTC-${Math.abs(Number(myUtc))}`;
+
+  return <div className="time-gutter">{utcStr}</div>;
 }
 
 function CustomHeader({ date }: any) {
