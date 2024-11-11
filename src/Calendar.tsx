@@ -40,6 +40,7 @@ function CustomToolbar({
   onExtraHeaderRender,
   isDisabled,
   renderCustomViewGroup = null,
+  timeZone,
 }: any) {
   if (!isDisabled) {
     isDisabled = (date: any, view: 'day' | 'week') => {
@@ -54,18 +55,13 @@ function CustomToolbar({
   const dateStr = useMemo(() => {
     const d = dayjs(date);
     if (view === Views.DAY) {
-      return d.locale('en').format('ddd, MMM D');
+      return d.locale('en').tz(timeZone).format('ddd, MMM D');
     }
 
     const a = d.startOf('week');
     const b = d.endOf('week');
-
-    // if (a.startOf('month') < b.startOf('month')) {
     return [a, b].map(o => o.locale('en').format('MMM D')).join(' - ');
-    // }
-
-    // return `${a.locale('en').format('MMM D')} - ${b.locale('en').format('D')}`;
-  }, [view, date]);
+  }, [view, date, timeZone]);
 
   const extraElement = onExtraHeaderRender?.() || null;
 
@@ -163,9 +159,10 @@ function TimeGutter({ myUtc }: any) {
   return <div className="time-gutter">{utcStr}</div>;
 }
 
-function CustomHeader({ date }: any) {
-  const isToday = dayjs(date).isToday();
+function CustomHeader({ date, timeZone }: any) {
   const d = dayjs(date).locale('en');
+  const isToday =
+    dayjs().tz(timeZone).format('YYYY-MM-DD') === d.format('YYYY-MM-DD');
 
   return (
     <div
@@ -262,6 +259,7 @@ export const MyCalendar: CalendarComponent = ({
           onExtraHeaderRender={onExtraHeaderRender}
           renderCustomViewGroup={renderCustomViewGroup}
           isDisabled={isDisabled}
+          timeZone={timeZone}
           {...props}
         />
       ) : null;
@@ -271,7 +269,7 @@ export const MyCalendar: CalendarComponent = ({
     return {
       toolbar,
       timeGutterHeader: (props: any) => <TimeGutter {...props} myUtc={myUtc} />,
-      header: CustomHeader,
+      header: (props: any) => <CustomHeader {...props} timeZone={timeZone} />,
       timeSlotWrapper: ({ value, children }: any) => {
         if (!children?.props?.children) {
           return null;
