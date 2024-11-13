@@ -1,19 +1,19 @@
 import { useCallback, useEffect, useMemo } from 'react';
-import { Calendar, Navigate, Views, dayjsLocalizer } from 'react-big-calendar';
 import dayjs from 'dayjs';
+import { Calendar, Navigate, Views } from 'react-big-calendar';
+import dayjsLocalizer from './localizer/dayjs';
 import isToday from 'dayjs/plugin/isToday';
 import isBetween from 'dayjs/plugin/isBetween';
 import utc from 'dayjs/plugin/utc';
 import timeZone from 'dayjs/plugin/timezone';
 import noOverlap from './no-overlap';
+
 import type { CalendarComponent } from '..';
 
 dayjs.extend(isToday);
 dayjs.extend(isBetween);
 dayjs.extend(utc);
 dayjs.extend(timeZone);
-
-const localizer = dayjsLocalizer(dayjs);
 
 function ViewNamesGroup({ views: viewNames, view, messages, onView }: any) {
   console.log(viewNames, messages, view);
@@ -29,9 +29,8 @@ function ViewNamesGroup({ views: viewNames, view, messages, onView }: any) {
   ));
 }
 
-function CustomToolbar({
+const CustomToolbar = ({
   date,
-  // label, // available, but not used here
   localizer: { messages },
   onNavigate,
   onView,
@@ -41,21 +40,21 @@ function CustomToolbar({
   isDisabled,
   renderCustomViewGroup = null,
   timeZone,
-}: any) {
+}: any) => {
   if (!isDisabled) {
     isDisabled = (date: any, view: 'day' | 'week') => {
       if (view === Views.DAY) {
-        return dayjs(date) <= dayjs().startOf('week');
+        return dayjs.tz(date) <= dayjs().tz(timeZone).startOf('week');
       }
 
-      return dayjs(date).startOf('weeks') <= dayjs().startOf('week');
+      return dayjs.tz(date).startOf('week') < dayjs.tz().startOf('week');
     };
   }
 
   const dateStr = useMemo(() => {
-    const d = dayjs(date);
+    const d = dayjs.tz(date);
     if (view === Views.DAY) {
-      return d.locale('en').tz(timeZone).format('ddd, MMM D');
+      return d.locale('en').format('ddd, MMM D');
     }
 
     const a = d.startOf('week');
@@ -150,19 +149,18 @@ function CustomToolbar({
       {extraElement}
     </div>
   );
-}
+};
 
-function TimeGutter({ myUtc }: any) {
-  const utcStr =
-    Number(myUtc) >= 0 ? `UTC+${myUtc}` : `UTC-${Math.abs(Number(myUtc))}`;
+function TimeGutter() {
+  const myUtc = dayjs.tz().utcOffset() / 60;
+  const utcStr = myUtc >= 0 ? `UTC+${myUtc}` : `UTC-${Math.abs(Number(myUtc))}`;
 
   return <div className="time-gutter">{utcStr}</div>;
 }
 
-function CustomHeader({ date, timeZone }: any) {
-  const d = dayjs(date).locale('en');
-  const isToday =
-    dayjs().tz(timeZone).format('YYYY-MM-DD') === d.format('YYYY-MM-DD');
+function CustomHeader({ date }: any) {
+  const d = dayjs.tz(date).locale('en');
+  const isToday = dayjs.tz().format('YYYY-MM-DD') === d.format('YYYY-MM-DD');
 
   return (
     <div
@@ -188,7 +186,7 @@ export const MyCalendar: CalendarComponent = ({
   onViewChange,
   onExtraHeaderRender = () => null,
   renderCustomViewGroup = null,
-  scrollToTime = new Date(),
+  scrollToTime: _scrollToTime = new Date(),
   style = {},
   className = '',
   isDisabled,
@@ -204,10 +202,26 @@ export const MyCalendar: CalendarComponent = ({
     }
   }, [date, view]);
 
+  useEffect(() => {
+    return () => {
+      dayjs.tz.setDefault(); // reset to browser TZ on unmount
+    };
+  }, []);
+
   const _events = useMemo(
     () => events.map(item => ({ ...item, resourceId: item.id })),
     [view, events]
   );
+
+  const { getNow, localizer, myEvents, scrollToTime } = useMemo(() => {
+    dayjs.tz.setDefault(timeZone);
+    return {
+      getNow: () => dayjs.tz().toDate(),
+      localizer: dayjsLocalizer(dayjs),
+      myEvents: [..._events],
+      scrollToTime: _scrollToTime || dayjs.tz().toDate(),
+    };
+  }, [timeZone, _scrollToTime, _events]);
 
   const resources = useMemo(() => {
     if (view == Views.WEEK || !members.length) {
@@ -264,34 +278,35 @@ export const MyCalendar: CalendarComponent = ({
         />
       ) : null;
 
-    const myUtc = dayjs().tz(timeZone).utcOffset() / 60;
+    const timeSlotWrapper = ({ value, children }: any) => {
+      if (!children?.props?.children) {
+        return null;
+      }
+
+      const hAStr = dayjs.tz(value).locale('en').format('h A');
+      let extra = '';
+
+      if (hAStr === '12 AM') {
+        extra = `Night`;
+      } else if (hAStr === '12 PM') {
+        extra = `Noon`;
+      }
+
+      return (
+        <div className="rbc-time-slot">
+          <span className="rbc-label">{hAStr}</span>
+          <div className="rbc-label">{extra}</div>
+        </div>
+      );
+    };
 
     return {
       toolbar,
-      timeGutterHeader: (props: any) => <TimeGutter {...props} myUtc={myUtc} />,
-      header: (props: any) => <CustomHeader {...props} timeZone={timeZone} />,
-      timeSlotWrapper: ({ value, children }: any) => {
-        if (!children?.props?.children) {
-          return null;
-        }
-
-        const date = dayjs(value).tz(timeZone).locale('en');
-        const isOddTimeZone = date.get('minute') === 30;
-        const str = isOddTimeZone ? date.format('h:mm A') : date.format('h A');
-        const isMidNight = str.startsWith('12') && str.endsWith('AM');
-        const isNoon = str.startsWith('12') && str.endsWith('PM');
-
-        return (
-          <div className="rbc-time-slot">
-            <span className="rbc-label">{str}</span>
-            <div className="rbc-label">
-              {isMidNight ? 'Night' : isNoon ? 'Noon' : ''}
-            </div>
-          </div>
-        );
-      },
+      timeGutterHeader: TimeGutter,
+      header: CustomHeader,
+      timeSlotWrapper,
     };
-  }, [showHeader, timeZone]);
+  }, [showHeader, timeZone, isDisabled]);
 
   return (
     <Calendar<{
@@ -312,15 +327,13 @@ export const MyCalendar: CalendarComponent = ({
       date={date}
       onNavigate={onChange}
       localizer={localizer}
-      events={_events}
+      events={myEvents}
+      getNow={getNow}
       startAccessor="start"
       scrollToTime={scrollToTime}
       endAccessor="end"
       tooltipAccessor={null}
       view={view}
-      formats={{
-        timeGutterFormat: date => dayjs(date).locale('en').format('h A'),
-      }}
       style={{ height: '100vh', ...style }}
       views={{
         day: true,
