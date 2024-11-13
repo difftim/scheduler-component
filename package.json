@@ -1,6 +1,6 @@
 {
   "name": "@baye/scheduler-component",
-  "version": "0.0.6",
+  "version": "0.0.6-alpha.1",
   "types": "./index.d.ts",
   "scripts": {
     "dev": "vite",
@@ -17,6 +17,7 @@
     "overlap.js",
     "no-overlap.js",
     "src/scss/**/*.scss",
+    "src/localizer/**",
     "index.d.ts"
   ],
   "dependencies": {
