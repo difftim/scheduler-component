@@ -26,3 +26,4 @@ dist-ssr
 Calendar.js
 overlap.js
 no-overlap.js
+localizer/dayjs.js
