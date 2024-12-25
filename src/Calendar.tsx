@@ -1,19 +1,10 @@
 import { useCallback, useEffect, useMemo } from 'react';
-import dayjs from 'dayjs';
-import { Calendar, Navigate, Views } from 'react-big-calendar';
-import dayjsLocalizer from './localizer/dayjs';
-import isToday from 'dayjs/plugin/isToday';
-import isBetween from 'dayjs/plugin/isBetween';
-import utc from 'dayjs/plugin/utc';
-import timeZone from 'dayjs/plugin/timezone';
+import moment from 'moment';
+import 'moment-timezone';
+import { Calendar, momentLocalizer, Navigate, Views } from 'react-big-calendar';
 import noOverlap from './no-overlap';
 
 import type { CalendarComponent } from '..';
-
-dayjs.extend(isToday);
-dayjs.extend(isBetween);
-dayjs.extend(utc);
-dayjs.extend(timeZone);
 
 function ViewNamesGroup({ views: viewNames, view, messages, onView }: any) {
   console.log(viewNames, messages, view);
@@ -44,15 +35,15 @@ const CustomToolbar = ({
   if (!isDisabled) {
     isDisabled = (date: any, view: 'day' | 'week') => {
       if (view === Views.DAY) {
-        return dayjs.tz(date) <= dayjs().tz(timeZone).startOf('week');
+        return moment(date) <= moment.tz(timeZone).startOf('week');
       }
 
-      return dayjs.tz(date).startOf('week') < dayjs.tz().startOf('week');
+      return moment(date).startOf('week') < moment().startOf('week');
     };
   }
 
   const dateStr = useMemo(() => {
-    const d = dayjs.tz(date);
+    const d = moment(date);
     if (view === Views.DAY) {
       return d.locale('en').format('ddd, MMM D');
     }
@@ -152,15 +143,15 @@ const CustomToolbar = ({
 };
 
 function TimeGutter() {
-  const myUtc = dayjs.tz().utcOffset() / 60;
+  const myUtc = moment().utcOffset() / 60;
   const utcStr = myUtc >= 0 ? `UTC+${myUtc}` : `UTC-${Math.abs(Number(myUtc))}`;
 
   return <div className="time-gutter">{utcStr}</div>;
 }
 
 function CustomHeader({ date }: any) {
-  const d = dayjs.tz(date).locale('en');
-  const isToday = dayjs.tz().format('YYYY-MM-DD') === d.format('YYYY-MM-DD');
+  const d = moment(date).locale('en');
+  const isToday = moment().format('YYYY-MM-DD') === d.format('YYYY-MM-DD');
 
   return (
     <div
@@ -204,7 +195,7 @@ export const MyCalendar: CalendarComponent = ({
 
   useEffect(() => {
     return () => {
-      dayjs.tz.setDefault(); // reset to browser TZ on unmount
+      moment.tz.setDefault(); // reset to browser TZ on unmount
     };
   }, []);
 
@@ -213,13 +204,14 @@ export const MyCalendar: CalendarComponent = ({
     [view, events]
   );
 
-  const { getNow, localizer, myEvents, scrollToTime } = useMemo(() => {
-    dayjs.tz.setDefault(timeZone);
+  const { getNow, myEvents, scrollToTime, localizer } = useMemo(() => {
+    moment.tz.setDefault(timeZone);
+    const now = moment().toDate();
     return {
-      getNow: () => dayjs.tz().toDate(),
-      localizer: dayjsLocalizer(dayjs),
+      getNow: () => now,
+      localizer: momentLocalizer(moment),
       myEvents: [..._events],
-      scrollToTime: _scrollToTime || dayjs.tz().toDate(),
+      scrollToTime: _scrollToTime || now,
     };
   }, [timeZone, _scrollToTime, _events]);
 
@@ -283,7 +275,7 @@ export const MyCalendar: CalendarComponent = ({
         return null;
       }
 
-      const hAStr = dayjs.tz(value).locale('en').format('h A');
+      const hAStr = moment(value).locale('en').format('h A');
       let extra = '';
 
       if (hAStr === '12 AM') {
@@ -344,8 +336,8 @@ export const MyCalendar: CalendarComponent = ({
       showAllEvents
       onView={onViewChange}
       onSelectSlot={e => {
-        const start = dayjs(e.start).unix();
-        const end = dayjs(e.end).unix();
+        const start = moment(e.start).unix();
+        const end = moment(e.end).unix();
 
         return onSelectSlot?.({
           ...e,
@@ -354,8 +346,8 @@ export const MyCalendar: CalendarComponent = ({
         });
       }}
       onSelectEvent={e => {
-        const start = dayjs(e.start).unix();
-        const end = dayjs(e.end).unix();
+        const start = moment(e.start).unix();
+        const end = moment(e.end).unix();
 
         return onSelectEvent?.({
           ...e,

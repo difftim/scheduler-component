@@ -1,12 +1,7 @@
 const esbuild = require('esbuild');
 const path = require('path');
 
-const entrys = [
-  'Calendar.tsx',
-  'no-overlap.ts',
-  'overlap.ts',
-  'localizer/dayjs.ts',
-];
+const entrys = ['Calendar.tsx', 'no-overlap.ts', 'overlap.ts'];
 
 const options = {
   platform: 'node',
