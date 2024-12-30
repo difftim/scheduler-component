@@ -48,9 +48,9 @@ const CustomToolbar = ({
       return d.locale('en').format('ddd, MMM D');
     }
 
-    const a = d.startOf('week');
-    const b = d.endOf('week');
-    return [a, b].map(o => o.locale('en').format('MMM D')).join(' - ');
+    const a = d.startOf('week').locale('en').format('MMM D');
+    const b = d.endOf('week').locale('en').format('MMM D');
+    return `${a} - ${b}`;
   }, [view, date, timeZone]);
 
   const extraElement = onExtraHeaderRender?.() || null;
