@@ -131,7 +131,7 @@ const App: React.FC = () => {
       onSelectSlot={(range: any) => {
         bridge.createNewMeeting(range);
       }}
-      timeZone="Asia/Bahrain"
+      timeZone="Asia/Almaty"
     />
   );
 };

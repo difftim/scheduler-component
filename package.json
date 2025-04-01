@@ -1,6 +1,6 @@
 {
   "name": "@baye/scheduler-component",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "types": "./index.d.ts",
   "scripts": {
     "dev": "vite",
@@ -21,6 +21,7 @@
     "index.d.ts"
   ],
   "dependencies": {
+    "moment-timezone": "0.5.48",
     "react-big-calendar": "1.8.5"
   },
   "devDependencies": {
@@ -32,7 +33,6 @@
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
     "@vitejs/plugin-react": "^4.2.0",
-    "antd": "5.9.2",
     "classnames": "2.3.2",
     "eslint": "^8.53.0",
     "eslint-plugin-react-hooks": "^4.6.0",
