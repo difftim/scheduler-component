@@ -1,9 +1,11 @@
+import dayjs from 'dayjs';
+
 const myEvents = [
   {
     id: '+6666',
     title: 'Meeting',
-    start: new Date('2023-12-07 12:00:00'),
-    end: new Date('2023-12-07 13:00:00'),
+    start: new Date(),
+    end: dayjs().add(1, 'hour').toDate(),
     desc: 'Pre-meeting meeting, to prepare for the meeting',
   },
   {

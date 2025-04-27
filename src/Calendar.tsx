@@ -7,7 +7,6 @@ import noOverlap from './no-overlap';
 import type { CalendarComponent } from '..';
 
 function ViewNamesGroup({ views: viewNames, view, messages, onView }: any) {
-  console.log(viewNames, messages, view);
   return viewNames.map((name: any) => (
     <button
       type="button"
@@ -182,6 +181,7 @@ export const MyCalendar: CalendarComponent = ({
   className = '',
   isDisabled,
   timeZone,
+  components: propsComponents,
   ...rest
 }) => {
   useEffect(() => {
@@ -315,7 +315,7 @@ export const MyCalendar: CalendarComponent = ({
       resources={resources}
       dayLayoutAlgorithm={noOverlap}
       eventPropGetter={eventPropGetter}
-      components={components}
+      components={{ ...components, ...propsComponents }}
       date={date}
       onNavigate={onChange}
       localizer={localizer}

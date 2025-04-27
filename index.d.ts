@@ -1,11 +1,22 @@
 import React from 'react';
-import { View } from 'react-big-calendar';
+import { View, Components } from 'react-big-calendar';
 
 type ViewGroupProps = {
   views: any[];
   view: any;
   messages: string[];
   onView: any;
+};
+
+export type Events = {
+  id: string;
+  eid: string;
+  title: string;
+  start: Date;
+  end: Date;
+  desc: string;
+  isBusy: boolean;
+  utc: Number;
 };
 
 export type CalendarProps = {
@@ -33,6 +44,7 @@ export type CalendarProps = {
   className?: string;
   renderCustomViewGroup?: (viewGroupProps: ViewGroupProps) => JSX.Element;
   isDisabled?: (date: any, view: 'day' | 'week') => boolean;
+  components?: Components<Events>;
 };
 
 export type CalendarComponent = React.FC<CalendarProps>;
