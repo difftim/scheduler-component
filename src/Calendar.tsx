@@ -206,6 +206,11 @@ export const MyCalendar: CalendarComponent = ({
 
   const { getNow, myEvents, scrollToTime, localizer } = useMemo(() => {
     moment.tz.setDefault(timeZone);
+    moment.updateLocale('zh-cn', {
+      week: {
+        dow: 1,
+      },
+    });
     const now = moment().toDate();
     return {
       getNow: () => now,
