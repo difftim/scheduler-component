@@ -42,13 +42,11 @@ const CustomToolbar = ({
   }
 
   const dateStr = useMemo(() => {
-    const d = moment(date);
     if (view === Views.DAY) {
-      return d.locale('en').format('ddd, MMM D');
+      return moment(date).locale('en').format('ddd, MMM D');
     }
-
-    const a = d.startOf('week').locale('en').format('MMM D');
-    const b = d.endOf('week').locale('en').format('MMM D');
+    const a = moment(date).startOf('week').locale('en').format('MMM D');
+    const b = moment(date).endOf('week').locale('en').format('MMM D');
     return `${a} - ${b}`;
   }, [view, date, timeZone]);
 
