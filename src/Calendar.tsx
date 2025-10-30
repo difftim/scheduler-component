@@ -210,9 +210,12 @@ export const MyCalendar: CalendarComponent = ({
       },
     });
     const now = moment().toDate();
+    const localizer = momentLocalizer(moment);
+    localizer.segmentOffset = 0;
+
     return {
       getNow: () => now,
-      localizer: momentLocalizer(moment),
+      localizer,
       myEvents: [..._events],
       scrollToTime: _scrollToTime || now,
     };

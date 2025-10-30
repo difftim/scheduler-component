@@ -1,6 +1,6 @@
 {
-  "name": "@baye/scheduler-component",
-  "version": "0.1.6",
+  "name": "@difftim/scheduler-component",
+  "version": "0.0.1",
   "types": "./index.d.ts",
   "scripts": {
     "dev": "vite",
@@ -44,5 +44,8 @@
     "sass": "^1.69.5",
     "typescript": "^5.2.2",
     "vite": "^5.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }
